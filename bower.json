@@ -1,0 +1,12 @@
+{
+  "name": "xrange",
+  "version": "0.1.0",
+  "main": "dist/xrange.min.js",
+  "devDependencies": {
+    "almond": "0.2.6",
+    "cajon": "git@github.com:requirejs/cajon.git#~0.1.11",
+    "inherits": "git://github.com/Livefyre/inherits.git",
+    "sinonjs": "~1.7.3"
+  },
+  "dependencies": {}
+}
