@@ -8,5 +8,7 @@
     "inherits": "git://github.com/Livefyre/inherits.git",
     "sinonjs": "~1.7.3"
   },
-  "dependencies": {}
+  "dependencies": {
+    "jquery": "2.1.0"
+  }
 }
