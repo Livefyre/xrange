@@ -1,0 +1,52 @@
+<html>
+  <head>
+    <script src="/lib/cajon/cajon.js"></script>
+    <script src="/requirejs.conf.js"></script>
+    <script src="/lib/jquery/dist/jquery.min.js"></script>
+    <script>
+        require([
+          'xrange/highlighter',
+          'xrange/xrange'
+        ], function(Highlighter, XRange) {
+          var highlighter = new Highlighter({
+            className: 'highlighted'
+          });
+          var range;
+          var highlighted = false;
+
+          $('p').on('mouseup', function () {
+            if (highlighted) {
+              return;
+            }
+            range = new XRange();
+            if (!range.toString()) {
+              return;
+            }
+            highlighter.highlight(range);
+            highlighted = true;
+          });
+
+          $('body').on('mousedown', function () {
+            if (!highlighted || !range) {
+              return;
+            }
+            highlighter.unhighlight(range);
+            highlighted = false;
+            range = null;
+          });
+        });
+    </script>
+    <style type="text/css">
+    .highlighted {
+      background-color: #f00;
+      color: #fff;
+    }
+    </style>
+  </head>
+  <body>
+    <p>Kitsch Tumblr try-hard vegan whatever, Carles McSweeney's ethnic ennui Etsy Helvetica pug plaid. Butcher biodiesel viral, typewriter ennui farm-to-table scenester pour-over Portland ugh PBR cliche. Selfies biodiesel narwhal, kogi irony Intelligentsia master cleanse hashtag Pitchfork. Fingerstache banh mi locavore bitters, gastropub cray pop-up tousled pour-over vinyl Wes Anderson butcher. Direct trade pour-over gentrify, pug Pinterest occupy messenger bag mumblecore biodiesel Schlitz banh mi Truffaut plaid. Shoreditch semiotics 90's master cleanse, literally lomo cred biodiesel cray cornhole. Meggings DIY Intelligentsia slow-carb gentrify, dreamcatcher messenger bag tote bag American Apparel food truck.</p>
+    <p>Carles church-key put a bird on it Tumblr roof party, <a href="http://google.com">raw denim hella cred semiotics <strong>Blue Bottle</strong> drinking vinegar Brooklyn freegan PBR. PBR</a> artisan kogi art party umami pickled. Fixie Pitchfork bitters dreamcatcher. Echo Park Helvetica selfies, fanny pack irony you probably haven't heard of them shabby chic flannel keytar actually mixtape McSweeney's 3 wolf moon fashion axe. Normcore slow-carb flannel chia single-origin coffee. Fingerstache tousled stumptown, actually Wes Anderson kale chips authentic before they sold out Williamsburg roof party. Twee deep v kale chips kogi scenester.</p>
+    <p>Kitsch Tumblr try-hard vegan whatever, Carles McSweeney's ethnic ennui Etsy Helvetica pug plaid. Butcher biodiesel viral, typewriter ennui farm-to-table scenester pour-over Portland ugh PBR cliche. Selfies biodiesel narwhal, kogi irony Intelligentsia master cleanse hashtag Pitchfork. Fingerstache banh mi locavore bitters, gastropub cray pop-up tousled pour-over vinyl Wes Anderson butcher. Direct trade pour-over gentrify, pug Pinterest occupy messenger bag mumblecore biodiesel Schlitz banh mi Truffaut plaid. Shoreditch semiotics 90's master cleanse, literally lomo cred biodiesel cray cornhole. Meggings DIY Intelligentsia slow-carb gentrify, dreamcatcher messenger bag tote bag American Apparel food truck.</p>
+    <p>Pour-over blog Brooklyn Odd Future, +1 YOLO forage tote bag meh chillwave Bushwick Pinterest fixie distillery. Organic Austin beard meh messenger bag brunch Etsy, bitters High Life blog pop-up Pitchfork cardigan. Lo-fi pour-over aesthetic seitan semiotics. DIY Banksy bitters, beard butcher synth fingerstache Bushwick four loko squid. Banh mi chillwave distillery McSweeney's twee 3 wolf moon before they sold out, selvage Wes Anderson Pinterest skateboard. Shabby chic quinoa Tumblr irony food truck, Cosby sweater mlkshk flexitarian put a bird on it. 90's iPhone bespoke, cornhole 3 wolf moon hella lo-fi tattooed meggings stumptown Etsy scenester sustainable Carles.</p>
+  </body>
+</html>
