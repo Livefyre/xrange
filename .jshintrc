@@ -9,7 +9,9 @@
     "chai": true,
     "beforeEach": true,
     "before": true,
-    "after": true
+    "after": true,
+    "afterEach": true,
+    "Range": true
   },
   "forin": true,
   "curly": true,

@@ -1,115 +1,78 @@
 /**
- * @fileOverview Range class that will be used as a wrapper for native browser
- * ranges and provides the same interface as the w3c Range class.
+ * @fileOverview Returns whichever range object should be used. This is
+ * determined by what the browser supports.
  */
 
+var $ = require('jquery');
+var domUtil = require('xrange/util/dom');
+
 /**
- * Custom range class. This class provides the same interface as the w3c Range
- * class, but it provides that functionality to older versions of IE.
- * @constructor
- * @param {Range|TextRange=} opt_range Optionally pass a range when
- *   constructing the new Range. It defaults to creating a new range.
+ * Range object.
+ * @type {StandardRange|IERange}
  */
-function XRange(opt_range) {
+var XRange = !!window.getSelection ?
+  require('xrange/standardrange') :
+  require('xrange/ierange');
+
+/**
+ * Get the range from a string representation of the range within the provided
+ * element. Returns null if no range could not be found or the range itself.
+ * @param {string} htmlStr The string to find the range of.
+ * @param {Element} rootEl The DOM element to find the range in.
+ * @param {XRange=} opt_range Optional range to update.
+ * @return {?XRange} Null or the range.
+ */
+XRange.getRangeByString = function (str, rootEl, opt_range) {
+  var rangeDom = $('<div />').html(str)[0];
+  var firstRangeNode = domUtil.findNodeInElement(rangeDom);
+  var lastRangeNode = domUtil.findNodeInElement(rangeDom, true);
+  // Ensure that we were able to find the first and last nodes within the root
+  // element.
+  if (!firstRangeNode || !lastRangeNode) {
+    return;
+  }
+  firstRangeNode = firstRangeNode.nodeValue;
+  lastRangeNode = lastRangeNode.nodeValue;
+
+  var range = opt_range || new XRange();
+  var startNodes = [];
+
   /**
-   * The native browser range object. This will be used heavily behind the
-   * scenes for all sorts of range shenanigans.
-   * @type {Range|TextRange}
-   * @private
+   * Checks a node and index with the startNodes array to see if the range
+   * matches the string that was provided in the parent function. Iterates over
+   * each start range node/idx array and tries to find a matching range.
+   * @param {Node} node The node to check as the end node in the range.
+   * @param {number} idx The index within the node where the range ends.
+   * @return {boolean} Whether the range matches the string or not.
    */
-  this._nativeRange = opt_range || this._createNativeRange();
-}
-
-/**
- * Create a native range instance. If there is a selection, create it based on
- * the selection.
- * @return {Range|TextRange} The native range instance.
- */
-XRange.prototype._createNativeRange = function () {
-  var sel = window.getSelection();
-  if (!sel.rangeCount || sel.isCollapsed) {
-    return document.createRange();
+  function checkRange(node, idx) {
+    var start;
+    range.setEnd(node, idx);
+    for (var i=0; i < startNodes.length; i++) {
+      start = startNodes[i];
+      range.setStart(start[0], start[1]);
+      // Check that the html string of the range is equal to the string that
+      // we're trying to get the range for.
+      if (range.toHtmlString() === str) {
+        return true;
+      }
+    }
+    return false;
   }
-  return sel.getRangeAt(0);
-};
 
-/**
- * Delete the contents of the range.
- */
-XRange.prototype.deleteContents = function () {
-  this._nativeRange.deleteContents();
-};
-
-/**
- * Returns a text rectangle object that encloses a group of text rectangles.
- * @return {Object}
- */
-XRange.prototype.getBoundingClientRect = function () {
-  return this._nativeRange.getBoundingClientRect();
-};
-
-/**
- * Get the parent element of the range.
- * @return {Element} The parent element.
- */
-XRange.prototype.getParentElement = function () {
-  var parentEl = this._nativeRange.commonAncestorContainer;
-  if (parentEl.nodeType !== 1) {
-    parentEl = parentEl.parentNode;
-  }
-  return parentEl;
-};
-
-/**
- * Insert the provided element into the range.
- * @param {Element} element The element to insert into the range.
- */
-XRange.prototype.insertNode = function(element) {
-  this._nativeRange.insertNode(element);
-};
-
-/**
- * Select the contents of the provided node.
- * @param {Node} node The node to select contents of.
- */
-XRange.prototype.selectNodeContents = function (node) {
-  this._nativeRange.selectNodeContents(node);
-};
-
-/**
- * Set the end position of this range.
- * @param {Node} node The node to end the range in.
- * @param {number} index The character index in the node to end the range.
- */
-XRange.prototype.setEnd = function (node, index) {
-  this._nativeRange.setEnd(node, index);
-};
-
-/**
- * Set the start of the range.
- * @param {Node} node The node in which to start the range.
- * @param {number} index The position in the node to start the range.
- */
-XRange.prototype.setStart = function (node, index) {
-  this._nativeRange.setStart(node, index);
-};
-
-/**
- * Get the html string contents of the range.
- * @return {string} The html string contents of the range.
- */
-XRange.prototype.toHtmlString = function () {
-  var div = document.createElement('div');
-  div.appendChild(this._nativeRange.cloneContents());
-  return div.innerHTML;
-};
-
-/**
- * Get the string contents of the range.
- * @return {string} The string contents of the range.
- */
-XRange.prototype.toString = function () {
-  return this._nativeRange.toString();
+  // Loop through all child nodes in the root element to find nodes that match
+  // the start and end nodes of the string.
+  var success = domUtil.forEachNode(rootEl, function (node) {
+    var startIdx = node.nodeValue.indexOf(firstRangeNode);
+    if (startIdx > -1) {
+      startNodes.push([node, startIdx]);
+    }
+    var endIdx = node.nodeValue.indexOf(lastRangeNode);
+    if (endIdx > -1 && checkRange(node, endIdx + lastRangeNode.length)) {
+      return true;
+    }
+  });
+  return success ? range : null;
 };
 
 module.exports = XRange;
