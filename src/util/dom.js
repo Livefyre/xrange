@@ -35,6 +35,10 @@ function processNode(node, callback, fn) {
   if (node.hasChildNodes()) {
     return fn(node, callback);
   }
+  // We only want to call the callback for text nodes.
+  if (node.nodeType !== 3) {
+    return;
+  }
   return callback(node);
 }
 
