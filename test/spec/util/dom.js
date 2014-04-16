@@ -4,11 +4,17 @@ var sinon = require('sinon');
 
 
 describe('dom', function () {
-  var complexDiv, htmlDiv, simpleDiv;
+  var complexDiv, emptyElementDiv, htmlDiv, simpleDiv;
 
   before(function () {
     complexDiv = fixtures.getComplexDOM();
     document.body.appendChild(complexDiv);
+
+    emptyElementDiv = document.createElement('div');
+    emptyElementDiv.appendChild(document.createTextNode('abc def'));
+    emptyElementDiv.appendChild(document.createElement('br'));
+    emptyElementDiv.appendChild(document.createTextNode('ghi jkl'));
+    document.body.appendChild(emptyElementDiv);
 
     htmlDiv = fixtures.getMediumDOM();
     document.body.appendChild(htmlDiv);
@@ -19,6 +25,7 @@ describe('dom', function () {
 
   after(function () {
     document.body.removeChild(complexDiv);
+    document.body.removeChild(emptyElementDiv);
     document.body.removeChild(htmlDiv);
     document.body.removeChild(simpleDiv);
   });
@@ -68,6 +75,12 @@ describe('dom', function () {
       domUtil.forEachNode(complexDiv, callback);
       chai.assert(callback.calledOnce);
     });
+
+    it('does not fire the callback for empty elements', function () {
+      var callback = sinon.stub();
+      domUtil.forEachNode(emptyElementDiv, callback);
+      chai.expect(callback.callCount).to.equal(2);
+    });
   });
 
   describe('forEachNodeReverse', function () {
@@ -97,6 +110,12 @@ describe('dom', function () {
       domUtil.forEachNodeReverse(complexDiv, callback);
       chai.assert(callback.calledOnce);
     });
+
+    it('does not fire the callback for empty elements', function () {
+      var callback = sinon.stub();
+      domUtil.forEachNodeReverse(emptyElementDiv, callback);
+      chai.expect(callback.callCount).to.equal(2);
+    });
   });
 
   describe('forEachSibling', function () {
@@ -119,6 +138,12 @@ describe('dom', function () {
       var callback = sinon.stub();
       domUtil.forEachSibling(htmlDiv.childNodes[0], callback);
       chai.expect(callback.callCount).to.equal(2);
+    });
+
+    it('does not fire the callback for empty elements', function () {
+      var callback = sinon.stub();
+      domUtil.forEachSibling(emptyElementDiv.childNodes[0], callback);
+      chai.expect(callback.callCount).to.equal(1);
     });
   });
 

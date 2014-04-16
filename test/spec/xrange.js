@@ -83,5 +83,22 @@ describe('range', function () {
       chai.expect(range.toString()).to.equal('cdefghij');
       chai.expect(range.toHtmlString()).to.equal(rangeStr);
     });
+
+    it('works for root elements that only contain text nodes and BR elements', function () {
+      var rangeStr = 'You can have it all but life keeps moving';
+      var div = document.createElement('div');
+      div.appendChild(document.createTextNode('I’ve had the highest mountains'));
+      div.appendChild(document.createElement('br'));
+      div.appendChild(document.createTextNode('I’ve had the deepest rivers'));
+      div.appendChild(document.createElement('br'));
+      div.appendChild(document.createTextNode('You can have it all but life keeps moving'));
+      div.appendChild(document.createElement('br'));
+      div.appendChild(document.createTextNode('Take it in but don’t look down'));
+
+      var range = XRange.getRangeByString(rangeStr, div);
+      chai.expect(range).to.be.an.instanceof(AbstractRange);
+      chai.expect(range.toString()).to.equal('You can have it all but life keeps moving');
+      chai.expect(range.toHtmlString()).to.equal('You can have it all but life keeps moving');
+    });
   });
 });
