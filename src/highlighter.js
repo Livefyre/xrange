@@ -70,6 +70,7 @@ Highlighter.prototype.highlight = function (xRange) {
     return;
   }
 
+  var commonAncestor = xRange.getParentNode();
   var hasReachedEnd = false;
   var self = this;
 
@@ -94,7 +95,7 @@ Highlighter.prototype.highlight = function (xRange) {
 
     // If the end node has not been reached yet but all siblings have been
     // visited, go up a level and check the siblings there.
-    if (!hasReachedEnd) {
+    if (!hasReachedEnd && currentNode.parentNode !== commonAncestor) {
       highlightSiblings(currentNode.parentNode);
     }
   }
