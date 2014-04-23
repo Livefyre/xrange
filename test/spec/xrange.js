@@ -102,11 +102,11 @@ describe('range', function () {
     });
   });
 
-  describe('addToWindow', function () {
+  describe('addToSelection', function () {
     it('adds the range to the native window selection', function () {
         var rangeStr = 'c def g';
         var range = XRange.getRangeByString(rangeStr, simpleDiv);
-        range.addToWindow();
+        range.addToSelection();
         var windowRange = new XRange();
         chai.expect(range.toString()).to.equal(windowRange.toString());
     });

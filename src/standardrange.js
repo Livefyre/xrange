@@ -45,7 +45,7 @@ StandardRange.prototype._createNativeRange = function () {
 };
 
 /** @override */
-StandardRange.prototype.addToWindow = function () {
+StandardRange.prototype.addToSelection = function () {
     var sel = window.getSelection();
     sel.addRange(this._nativeRange);
 };

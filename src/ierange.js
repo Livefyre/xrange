@@ -50,7 +50,7 @@ IERange.prototype._createNativeRange = function () {
 };
 
 /** @override */
-IERange.prototype.addToWindow = function () {
+IERange.prototype.addToSelection = function () {
 
 };
 
