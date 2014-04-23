@@ -44,6 +44,12 @@ StandardRange.prototype._createNativeRange = function () {
   return sel.getRangeAt(0);
 };
 
+/** @override */
+StandardRange.prototype.addToWindow = function () {
+    var sel = window.getSelection();
+    sel.addRange(this._nativeRange);
+};
+
 /**
  * Backup the range string in case it needs to be rebuilt.
  */

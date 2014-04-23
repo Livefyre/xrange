@@ -17,6 +17,11 @@ function AbstractRange() {}
 AbstractRange.prototype._createNativeRange = abstractMethod;
 
 /**
+ * Add the range to the window
+ */
+AbstractRange.prototype.addToWindow = abstractMethod;
+
+/**
  * Backup the range string in case it needs to be rebuilt.
  */
 AbstractRange.prototype.backup = abstractMethod;
