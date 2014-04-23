@@ -18,8 +18,8 @@ function getFixtureObj(name, callback) {
   });
 }
 
-app.use(express.directory(__dirname));
-app.use(express.static(__dirname));
+app.use(require('serve-index')(__dirname));
+app.use(require('serve-static')(__dirname));
 
 console.log('starting server at port', PORT);
 app.listen(PORT);

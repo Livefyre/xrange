@@ -17,6 +17,11 @@ function AbstractRange() {}
 AbstractRange.prototype._createNativeRange = abstractMethod;
 
 /**
+ * Add the range to the selection
+ */
+AbstractRange.prototype.addToSelection = abstractMethod;
+
+/**
  * Backup the range string in case it needs to be rebuilt.
  */
 AbstractRange.prototype.backup = abstractMethod;

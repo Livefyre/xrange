@@ -16,7 +16,9 @@
     "mocha": "1.14.0",
     "mocha-phantomjs": "3.1.6",
     "phantomjs": "*",
-    "requirejs": "2.1.9"
+    "requirejs": "2.1.9",
+    "serve-index": "*",
+    "serve-static": "*"
   },
   "scripts": {
     "build": "./node_modules/requirejs/bin/r.js -o ./build.conf.js",

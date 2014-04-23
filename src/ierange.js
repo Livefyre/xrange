@@ -49,6 +49,11 @@ IERange.prototype._createNativeRange = function () {
   return document.selection.createRange();
 };
 
+/** @override */
+IERange.prototype.addToSelection = function () {
+
+};
+
 /**
  * Backup the range string in case it needs to be rebuilt.
  */
