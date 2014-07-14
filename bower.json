@@ -1,6 +1,6 @@
 {
   "name": "xrange",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "main": "dist/xrange.min.js",
   "devDependencies": {
     "almond": "0.2.6",
