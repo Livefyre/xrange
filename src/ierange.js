@@ -167,7 +167,7 @@ IERange.prototype.setStart = function (node, index) {
  * @return {string} The html string contents of the range.
  */
 IERange.prototype.toHtmlString = function () {
-
+  return '';
 };
 
 /**
@@ -175,7 +175,7 @@ IERange.prototype.toHtmlString = function () {
  * @return {string} The string contents of the range.
  */
 IERange.prototype.toString = function () {
-
+  return '';
 };
 
 module.exports = IERange;

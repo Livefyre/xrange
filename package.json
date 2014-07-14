@@ -7,11 +7,11 @@
     "name": "Mark Doten",
     "email": "mark.doten@gmail.com"
   },
-  "version": "0.1.0",
+  "version": "0.1.1",
   "devDependencies": {
     "bower": "*",
     "chai": "1.8.1",
-    "express": "*",
+    "express": "3.x",
     "jshint": "~1.1.0",
     "mocha": "1.14.0",
     "mocha-phantomjs": "3.1.6",
