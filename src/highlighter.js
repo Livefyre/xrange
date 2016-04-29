@@ -3,8 +3,8 @@
  * instance with html.
  */
 
-var domUtil = require('xrange/util/dom');
-var XRange = require('xrange/xrange');
+var domUtil = require('./util/dom');
+var XRange = require('./xrange');
 
 /**
  * Highlighter class.
