@@ -3,7 +3,7 @@
  * ranges and provides the same interface as the w3c Range class.
  */
 
-var AbstractRange = require('xrange/abstractrange');
+var AbstractRange = require('./abstractrange');
 var inherits = require('inherits');
 
 /**

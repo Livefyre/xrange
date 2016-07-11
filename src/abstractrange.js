@@ -2,7 +2,7 @@
  * @fileOverview Abstract range class.
  */
 
-var abstractMethod = require('xrange/util').abstractMethod;
+var abstractMethod = require('./util/base').abstractMethod;
 
 /**
  * Abstract range class.

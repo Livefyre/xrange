@@ -3,27 +3,27 @@
  * determined by what the browser supports.
  */
 
-var $ = require('jquery');
-var domUtil = require('xrange/util/dom');
+var domUtil = require('./util/dom');
 
 /**
  * Range object.
  * @type {StandardRange|IERange}
  */
 var XRange = !!window.getSelection ?
-  require('xrange/standardrange') :
-  require('xrange/ierange');
+  require('./standardrange') :
+  require('./ierange');
 
 /**
  * Get the range from a string representation of the range within the provided
  * element. Returns null if no range could not be found or the range itself.
- * @param {string} htmlStr The string to find the range of.
+ * @param {string} str The string to find the range of.
  * @param {Element} rootEl The DOM element to find the range in.
  * @param {XRange=} opt_range Optional range to update.
  * @return {?XRange} Null or the range.
  */
 XRange.getRangeByString = function (str, rootEl, opt_range) {
-  var rangeDom = $('<div />').html(str)[0];
+  var rangeDom = document.createElement('div');
+  rangeDom.innerHTML = str;
   var firstRangeNode = domUtil.findNodeInElement(rangeDom);
   var lastRangeNode = domUtil.findNodeInElement(rangeDom, true);
   // Ensure that we were able to find the first and last nodes within the root

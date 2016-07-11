@@ -7,7 +7,7 @@
     "name": "Mark Doten",
     "email": "mark.doten@gmail.com"
   },
-  "version": "0.1.1",
+  "version": "0.1.2",
   "devDependencies": {
     "bower": "*",
     "chai": "1.8.1",
@@ -23,7 +23,7 @@
   "scripts": {
     "build": "./node_modules/requirejs/bin/r.js -o ./build.conf.js",
     "hint": "./node_modules/jshint/bin/jshint src/ test/spec/; echo",
-    "postinstall": "./node_modules/bower/bin/bower install",
+    "postinstall": "bower install",
     "start": "node ./server.js",
     "test": "./bin/test"
   }
